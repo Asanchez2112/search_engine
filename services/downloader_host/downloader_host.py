@@ -68,17 +68,28 @@ def process_cdx_url(connection, url, batch_size=100, source='cc', **kwargs):
             log.info('fetching result; progress='+str(i)+'/'+str(estimated_urls)+'={:10.4f}'.format(i/estimated_urls)+' url='+result['url'])
 
             # FIXME: extract a warc record from the result variable
-
+            log.info(result.data)
+            log.info(result['filename'])
+            log.info(result.data['filename'])
+            log.info('5')
+            log.info(result['filename'])
+            record = result.fetch_warc_record()
+            log.info('record')
+            log.info(record)
             # FIXME: extract the information from the warc record
-            url = None
-            accessed_at = None
-            html = None
+            url = record.rec_headers.get_header('WARC-Target-URI')
+            accessed_at = record.rec_headers.get_header('WARC-Date')
+            html = record.content_stream().read()
             log.debug("url="+url)
 
             # FIXME: extract the metainfo using the metahtml library
-            meta = None
-            pspacy_title = None
-            pspacy_content = None
+            meta = metahtml.parse(html, url)
+            try:
+                pspacy_title = pspacy.lemmatize(meta['language']['best']['value'], meta['title']['best']['value'])
+                pspacy_content = pspacy.lemmatize(meta['language']['best']['value'], meta['title']['best']['value'])
+            except TypeError:
+                pspacy_title = None
+                pspacy_content = None
 
             # append to the batch
             batch.append({

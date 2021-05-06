@@ -92,7 +92,7 @@ def process_warc_from_disk(connection, warc_path, id_source, batch_size=100):
             # WARC files contain many entries;
             # we only care about HTTP200 status code responses
             if record.rec_type == 'response':
-
+                print(record)
                 # extract the information from the warc archive
                 url = record.rec_headers.get_header('WARC-Target-URI')
                 accessed_at = record.rec_headers.get_header('WARC-Date')
