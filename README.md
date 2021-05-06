@@ -320,8 +320,8 @@ There are two steps:
 1. Take a screenshot of an interesting search result.
    Add the screenshot to your git repo, and modify the `<img>` tag below to point to the screenshot.
 
-   <img src='Comics_Query.png' />
-   <img src='Comics_results.png' />
+   <img src='Comics_Query.PNG' />
+   <img src='Comics_results.PNG' />
 
 1. Commit and push your changes to github.
 
